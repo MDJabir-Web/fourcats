@@ -46,7 +46,7 @@ Responsive Design: The layout adjusts seamlessly across different screen sizes.
 1. Clone the Repository
 Clone or download this repository to your local machine.
 
-git clone https://github.com/yourusername/the-ethereal-cat-realm.git
+git clone https://github.com/mdjabir-web/fourcats.git
 
 
 2. Open in Browser
