@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ethereal Cat Realm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(145deg, #1e1e2f, #2a2a4a);
+      color: #e0e1dd;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background Shapes */
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      background: linear-gradient(45deg, #ff6f61, #d65db1);
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+      z-index: -1;
+    }
+    body::before { width: 400px; height: 400px; top: -100px; left: -100px; }
+    body::after { width: 300px; height: 300px; bottom: -50px; right: -50px; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin: 20px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('imgs/all.jpg') center/cover no-repeat;
+      opacity: 0.1;
+      border-radius: 20px;
+      animation: pulse 15s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 0.1; } 50% { opacity: 0.2; } }
+    .hero h1 {
+      font-size: clamp(2.5em, 8vw, 5em);
+      font-weight: 700;
+      color: #f1faee;
+      text-shadow: 0 0 15px #ff6f61;
+      background: linear-gradient(45deg, #ff6f61, #d65db1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: clamp(1.2em, 4vw, 1.8em); font-weight: 300; color: #a8dadc; margin: 20px 0; }
+    .hero-btn {
+      padding: 15px 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      color: #f1faee;
+      font-size: clamp(1em, 3vw, 1.3em);
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      backdrop-filter: blur(5px);
+      transition: all 0.5s ease;
+    }
+    .hero-btn::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(214, 93, 177, 0.3);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    .hero-btn:hover, .hero-btn:active {
+      background: #d65db1;
+      color: #1e1e2f;
+      transform: scale(1.1);
+    }
+    .hero-btn:hover::after { width: 200px; height: 200px; }
+
+    /* About */
+    .about {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(45deg, #845ec2, #ff6f61);
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.4;
+    }
+    .about h2 { font-size: clamp(2em, 6vw, 3.5em); font-weight: 700; color: #f1faee; }
+    .about p { font-size: clamp(1em, 3vw, 1.4em); font-weight: 300; max-width: 900px; margin: 20px auto; }
+
+    /* Cats */
+    .cats {
+      padding: 60px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    .cat {
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .cat:hover { transform: translateY(-10px); }
+    .cat img { max-width: 100%; border-radius: 15px; margin-bottom: 20px; }
+    .cat h3 { font-size: clamp(1.5em, 4vw, 2.5em); font-weight: 700; margin-bottom: 15px; }
+    .cat p { font-size: clamp(0.9em, 2.5vw, 1.2em); font-weight: 300; }
+    .cat .expand-btn {
+      margin-top: 20px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      color: #1e1e2f;
+      font-size: clamp(0.9em, 2.5vw, 1.2em);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      backdrop-filter: blur(5px);
+    }
+    .cat .more-info {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      padding: 0 20px;
+      font-size: clamp(0.9em, 2.5vw, 1.1em);
+      font-weight: 300;
+    }
+    .cat.expanded .more-info { max-height: 400px; padding: 20px; }
+    .leo { background: linear-gradient(135deg, rgba(69, 123, 157, 0.3), rgba(244, 162, 97, 0.3)); }
+    .leo h3 { color: #f1faee; background: linear-gradient(45deg, #845ec2, #ff6f61); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .leo .expand-btn { background: #f4a261; }
+    .leo .expand-btn:hover, .leo .expand-btn:active { background: #ff6f61; color: #f1faee; transform: scale(1.15) rotate(3deg); box-shadow: 0 0 25px #845ec2; }
+    .melo { background: linear-gradient(135deg, rgba(29, 53, 87, 0.3), rgba(168, 218, 220, 0.3)); }
+    .melo h3 { color: #f1faee; background: linear-gradient(45deg, #d65db1, #a8dadc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .melo .expand-btn { background: #a8dadc; }
+    .melo .expand-btn:hover, .melo .expand-btn:active { background: #d65db1; color: #f1faee; transform: scale(1.15) skew(-5deg); box-shadow: 0 0 25px #a8dadc; }
+    .tommy { background: linear-gradient(135deg, rgba(92, 64, 51, 0.3), rgba(233, 196, 106, 0.3)); }
+    .tommy h3 { color: #f1faee; background: linear-gradient(45deg, #ff9671, #e9c46a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .tommy .expand-btn { background: #e9c46a; }
+    .tommy .expand-btn:hover, .tommy .expand-btn:active { background: #ff9671; color: #f1faee; transform: scale(1.15) rotate(-3deg); box-shadow: 0 0 25px #e9c46a; }
+    .jerry { background: linear-gradient(135deg, rgba(42, 157, 143, 0.3), rgba(241, 196, 83, 0.3)); }
+    .jerry h3 { color: #f1faee; background: linear-gradient(45deg, #845ec2, #f1c453); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .jerry .expand-btn { background: #f1c453; }
+    .jerry .expand-btn:hover, .jerry .expand-btn:active { background: #845ec2; color: #f1faee; transform: scale(1.15) skew(5deg); box-shadow: 0 0 25px #f1c453; }
+
+    /* eBook */
+    .ebook {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin: 20px;
+      position: relative;
+    }
+    .ebook::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      right: -30px;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(45deg, #ff6f61, #d65db1);
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.4;
+    }
+    .ebook h2 { font-size: clamp(2em, 6vw, 3.5em); font-weight: 700; color: #f1faee; }
+    .ebook p { font-size: clamp(1em, 3vw, 1.4em); font-weight: 300; margin: 20px 0; }
+    .ebook-btn {
+      display: inline-block;
+      padding: 15px 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      color: #f1faee;
+      text-decoration: none;
+      font-size: clamp(1em, 3vw, 1.3em);
+      font-weight: 500;
+      transition: all 0.5s ease;
+      position: relative;
+      backdrop-filter: blur(5px);
+    }
+    .ebook-btn::before {
+      content: '✨';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+    .ebook-btn:hover, .ebook-btn:active {
+      background: #ff6f61;
+      color: #1e1e2f;
+      transform: scale(1.1);
+    }
+    .ebook-btn:hover::before { top: 20%; opacity: 1; }
+
+    /* Gallery */
+    .gallery {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin: 20px;
+    }
+    .gallery h2 { font-size: clamp(2em, 6vw, 3.5em); font-weight: 700; color: #f1faee; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.4s ease;
+    }
+    .gallery-grid img:hover { transform: scale(1.05); box-shadow: 0 0 20px #d65db1; }
+
+    /* Fun Facts (Realm Revelations) */
+    .fun-facts {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin: 20px;
+      position: relative;
+    }
+    .fun-facts::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(45deg, #845ec2, #ff9671);
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.4;
+    }
+    .fun-facts h2 { font-size: clamp(2em, 6vw, 3.5em); font-weight: 700; color: #f1faee; }
+    .facts-list {
+      list-style: none;
+      font-size: clamp(0.9em, 2.5vw, 1.3em);
+      font-weight: 300;
+      max-width: 900px;
+      margin: 30px auto;
+    }
+    .facts-list li { margin: 20px 0; opacity: 0; animation: fadeIn 1s ease forwards; }
+    .facts-list li:nth-child(1) { animation-delay: 0.2s; }
+    .facts-list li:nth-child(2) { animation-delay: 0.4s; }
+    .facts-list li:nth-child(3) { animation-delay: 0.6s; }
+    .facts-list li:nth-child(4) { animation-delay: 0.8s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Guestbook */
+    .guestbook {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      margin: 20px;
+    }
+    .guestbook h2 { font-size: clamp(2em, 6vw, 3.5em); font-weight: 700; color: #f1faee; }
+    .guestbook form { max-width: 700px; margin: 30px auto; }
+    .guestbook input, .guestbook textarea {
+      width: 100%;
+      padding: 15px;
+      margin: 15px 0;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #f1faee;
+      font-size: clamp(0.9em, 2.5vw, 1.1em);
+      font-weight: 300;
+      backdrop-filter: blur(5px);
+    }
+    .guestbook button {
+      padding: 15px 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      color: #f1faee;
+      font-size: clamp(1em, 3vw, 1.3em);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(5px);
+    }
+    .guestbook button:hover, .guestbook button:active { background: #d65db1; color: #1e1e2f; transform: scale(1.1); }
+
+    /* Footer */
+    .footer {
+      padding: 40px 20px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px 20px 0 0;
+      margin-top: 20px;
+      font-size: clamp(1em, 3vw, 1.3em);
+      font-weight: 300;
+      position: relative;
+    }
+    .footer::after {
+      content: '🌙';
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 2em;
+      animation: spin 10s linear infinite;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* Mobile Adjustments */
+    @media (max-width: 768px) {
+      .cats { grid-template-columns: 1fr; gap: 20px; }
+      .cat { padding: 20px; }
+      .hero { padding: 40px 10px; min-height: 80vh; margin: 10px; }
+      .about, .ebook, .gallery, .fun-facts, .guestbook { padding: 40px 10px; margin: 10px; }
+      .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+      body::before { width: 300px; height: 300px; }
+      body::after { width: 200px; height: 200px; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: clamp(2em, 10vw, 4em); }
+      .hero p { font-size: clamp(1em, 5vw, 1.5em); }
+      .hero-btn { padding: 10px 30px; }
+      .cat .expand-btn { padding: 10px 20px; }
+      .guestbook form { padding: 0 10px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>The Ethereal Cat Realm</h1>
+    <p>A Sacred Space for Leo, Melo, Tommy, and Jerry – Beloved by All</p>
+    <button class="hero-btn">Enter the Realm</button>
+  </section>
+
+  <!-- About -->
+  <section class="about">
+    <h2>Our Eternal Companions</h2>
+    <p>These four souls transcend ownership—they’re a shared treasure. Leo guards us from beyond, while Melo, Tommy, and Jerry weave their magic in our lives.</p>
+  </section>
+
+  <!-- Cats -->
+  <section class="cats">
+    <div class="cat leo">
+      <img src="imgs/leo.jpg" alt="Leo">
+      <h3>Leo – The Celestial Guardian</h3>
+      <p>Departed September 13, 2022, Leo’s heroic sacrifice against dark forces echoes in eternity.</p>
+      <button class="expand-btn">Unveil Leo’s Legacy</button>
+      <div class="more-info">
+        <p>Leo was our protector, a celestial warrior who faced black magic to save us. The jinns took her life, but her spirit remains our shield. She’d perch on high, eyes glowing with resolve, chasing away shadows with her fierce love.</p>
+      </div>
+    </div>
+    <div class="cat melo">
+      <img src="imgs/melo.jpg" alt="Melo">
+      <h3>Melo – The Midnight Muse</h3>
+      <p>Melo’s girlish charm and soft voice defy his boyish form, a delicate enigma.</p>
+      <button class="expand-btn">Discover Melo’s Mystique</button>
+      <div class="more-info">
+        <p>Melo moves with a feminine grace—his high-pitched meows and dainty steps surprise everyone. He loves stealing socks from new visitors, hiding them under the couch so they’ll stay longer. His black-and-white coat is his cloak of mystery.</p>
+      </div>
+    </div>
+    <div class="cat tommy">
+      <img src="imgs/tommy.jpg" alt="Tommy">
+      <h3>Tommy – The Amber Storyteller</h3>
+      <p>Tommy’s loud demands and entertaining antics light up the realm with warmth.</p>
+      <button class="expand-btn">Hear Tommy’s Chronicles</button>
+      <div class="more-info">
+        <p>Tommy’s a showman—when he wants food or attention, his booming “DUH” echoes through the house. Yet his cuddly side shines through, curling up with a purr that vibrates the room. He’s been known to swipe keys and hide them to keep guests captive!</p>
+      </div>
+    </div>
+    <div class="cat jerry">
+      <img src="imgs/jerry.jpg" alt="Jerry">
+      <h3>Jerry – The Wild Wanderer</h3>
+      <p>Jerry’s silent presence erupts into shouts for food or affection, a loyal trickster.</p>
+      <button class="expand-btn">Chase Jerry’s Journey</button>
+      <div class="more-info">
+        <p>Jerry’s the quiet one—until he’s hungry or missing someone, then his yowls pierce the silence. He’ll latch onto new people, stealing their stuff (like wallets!) and stashing it away so they can’t leave. His brownish hues flicker with wild energy.</p>
+      </div>
+    </div>
+  </section>
+
+<!-- eBook -->
+<section class="ebook">
+  <h2>The Ethereal Codex</h2>
+  <p>Explore their full saga in our eBook: <em>A Book for Leo, Melo, Tommy, and Jerry</em>. Now available!</p>
+  <a href="https://drive.google.com/file/d/1LfZJl0ob6hoN-Y0Dc-Rlx3qJgFhS2zo3/view?usp=drivesdk" class="ebook-btn">Download eBook (PDF)</a>
+</section>
+
+  <!-- Gallery -->
+  <section class="gallery">
+    <h2>Ethereal Moments</h2>
+    <div class="gallery-grid">
+      <img src="imgs/leo.jpg" alt="Leo">
+      <img src="imgs/melo.jpg" alt="Melo">
+      <img src="imgs/tommy.jpg" alt="Tommy">
+      <img src="imgs/jerry.jpg" alt="Jerry">
+      <img src="imgs/all.jpg" alt="All Cats">
+    </div>
+  </section>
+
+  <!-- Fun Facts (Realm Revelations) -->
+  <section class="fun-facts">
+    <h2>Realm Revelations</h2>
+    <ul class="facts-list">
+      <li>Leo faced jinns head-on, saving us from a dark curse.</li>
+      <li>Melo’s girlish squeaks once fooled a vet into calling him “she”!</li>
+      <li>Tommy’s “DUH” woke the neighbors when he demanded breakfast.</li>
+      <li>Jerry hid a guest’s phone so well, we found it a week later under the rug.</li>
+    </ul>
+  </section>
+
+  <!-- Guestbook -->
+  <section class="guestbook">
+    <h2>Whisper to the Realm</h2>
+    <form id="guestbook-form">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <textarea name="message" placeholder="Share your thoughts with the Ethereal Cats!" required></textarea>
+      <button type="submit">Send Echo</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>A timeless bond – Leo in eternity, Melo, Tommy, and Jerry in our hearts.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("XWduJmxEL57sR-CIf");
+    document.getElementById("guestbook-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      emailjs.send("service_dbdja4p", "template_pkmrj5s", {
+        name: this.name.value,
+        message: this.message.value
+      }).then(() => alert("Echo sent to the Ethereal Cats!"), (error) => alert("Echo lost in the void!"));
+    });
+
+    // Expandable Cat Sections
+    document.querySelectorAll('.expand-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.parentElement;
+        cat.classList.toggle('expanded');
+      });
+    });
+  </script>
+</body>
+  </html>
